@@ -7,7 +7,7 @@ const secret = require('../../config/jwt').KEY.secret
 exports.signIn = async (req, res) => {
     try {
         var isAutoLogin = req.body.isAutoLogin
-        var accountId = req.body.accountId
+        var accountId = 0
         var accessToken = ''
         var refreshToekn = ''
         var id_inToken = 0
@@ -15,6 +15,7 @@ exports.signIn = async (req, res) => {
         var password = ''
         if (isAutoLogin) {
             console.log('자동 로그인')
+            accountId = req.body.accountId
             accessToken = req.body.accessToken
             refreshToekn = req.body.refreshToekn
             //토큰 검증
@@ -56,6 +57,7 @@ exports.signIn = async (req, res) => {
             })
             if (user != null) {
                 if (user.password === password) {
+                    accountId = user.id
                     accessToken = jwt.sign({ accountId }, secret, { expiresIn: "24h" })
                     refreshToekn = jwt.sign({ accountId }, secret, { expiresIn: "30d" })
                     console.log('로그인 성공')
