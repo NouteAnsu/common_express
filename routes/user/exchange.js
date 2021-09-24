@@ -4,5 +4,6 @@ const router = require('express').Router()
 var exchange = require('../../controllers/user/exchange')
 
 router.get('/currentRate', exchange.currentRate)
+router.get('/crolling',exchange.crolling)
 
 module.exports = router
